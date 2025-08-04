@@ -41,8 +41,9 @@ jobs:
       - name: Deploy on EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            docker container stop enterprisesolutionstech || true
+            docker container rm enterprisesolutionstech || true
+            docker image rm enterprisesolutionstech/enterprisesolutionstech:latest || true
             docker pull enterprisesolutionstech/enterprisesolutionstech:latest
-            docker stop enterprisesolutionstech || true
-            docker rm enterprisesolutionstech || true
             docker run -d --name enterprisesolutionstech -p 3000:3000 enterprisesolutionstech/enterprisesolutionstech:latest
           EOF
