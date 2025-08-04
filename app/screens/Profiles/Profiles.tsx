@@ -125,7 +125,7 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
             </SocialIcon>
           )}
           {profile?.contacto && (
-            <SocialIcon href={profile.linkedin} target="_blank">
+            <SocialIcon href={`mailto:${profile.contacto}`} target="_blank">
               <FaEnvelope size={18} />
             </SocialIcon>
           )}
