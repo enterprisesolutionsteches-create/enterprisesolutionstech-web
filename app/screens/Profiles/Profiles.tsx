@@ -111,22 +111,22 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
         <ContactLinks>
           {profile?.telefono && (
             <SocialIcon href={`tel:${profile.telefono}`}>
-              <FaPhone size={18} />
+              <FaPhone size={22} />
             </SocialIcon>
           )}
           {profile?.whatsapp && (
             <SocialIcon href={profile.whatsapp} target="_blank">
-              <FaWhatsapp size={18} />
+              <FaWhatsapp size={22} />
             </SocialIcon>
           )}
           {profile?.linkedin && (
             <SocialIcon href={profile.linkedin} target="_blank">
-              <FaLinkedin size={18} />
+              <FaLinkedin size={22} />
             </SocialIcon>
           )}
           {profile?.contacto && (
             <SocialIcon href={`mailto:${profile.contacto}`} target="_blank">
-              <FaEnvelope size={18} />
+              <FaEnvelope size={22} />
             </SocialIcon>
           )}
         </ContactLinks>
@@ -200,7 +200,7 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
           <CVButton href={profile?.cv} target="_blank">
             Descargar CV
           </CVButton>
-          <CVButton href={profile?.contacto}>Contactar</CVButton>
+          <CVButton href={`mailto:${profile.contacto}`}>Contactar</CVButton>
         </CVButtons>
       </CVCard>
     </CVRoot>
