@@ -24,7 +24,6 @@ export const Container = styled(ElementContainer, {
 export const BlockContact = styled("div", {
   backgroundColor: "$secondary300",
   py: "$op",
-  "@bp2": { display: "none" },
 });
 
 export const Contact = styled("div", {
