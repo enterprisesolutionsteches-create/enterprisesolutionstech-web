@@ -1,0 +1,48 @@
+name: Deploy Next.js App to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build Next.js app
+        run: yarn build
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t enterprisesolutionstech/enterprisesolutionstech:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: docker push enterprisesolutionstech/enterprisesolutionstech:latest
+
+      - name: Setup SSH key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > ec2_key.pem
+          chmod 600 ec2_key.pem
+
+      - name: Deploy on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            docker pull enterprisesolutionstech/enterprisesolutionstech:latest
+            docker stop enterprisesolutionstech || true
+            docker rm enterprisesolutionstech || true
+            docker run -d --name enterprisesolutionstech -p 3000:3000 enterprisesolutionstech/enterprisesolutionstech:latest
+          EOF
