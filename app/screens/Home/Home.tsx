@@ -84,6 +84,7 @@ export const Home = () => {
     [bannerData]
   );
   const { BannerData } = useBannerData(memoizedBannerData, "Home", true);
+  
   return (
     <HomeRoot>
       {BannerData.length > 0 && (

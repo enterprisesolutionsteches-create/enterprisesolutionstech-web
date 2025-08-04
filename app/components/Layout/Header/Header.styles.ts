@@ -40,10 +40,11 @@ export const Contact = styled("div", {
   },
 });
 
-export const ContactText = styled("span", {
+export const ContactText = styled("a", {
   color: "$secondary700",
   fontSize: "$min",
   lineHeight: "$140",
+  cursor: "pointer"
 });
 
 export const Networks = styled("div", {

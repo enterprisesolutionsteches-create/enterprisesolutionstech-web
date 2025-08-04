@@ -105,6 +105,7 @@ export const Header: FC<HeaderProps> = () => {
                   <ContactText
                     key={item.id}
                     style={{ color: "$primary", fontWeight: "bold" }}
+                    href={`tel:+${item.telefono}`}
                   >
                     +{item.telefono}
                   </ContactText>
