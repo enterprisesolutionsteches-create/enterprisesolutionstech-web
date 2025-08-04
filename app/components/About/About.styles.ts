@@ -661,7 +661,7 @@ export const GridPrograma = styled("div", {
   display: "grid",
   paddingBottom: 50,
   gap: "$5",
-  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateColumns: "repeat(5, 1fr)",
   width: "100%",
   "@media (max-width: 1024px)": {
     gridTemplateColumns: "repeat(2, 1fr)",
