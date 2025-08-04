@@ -22,6 +22,7 @@ import {
   TechList,
 } from "./Profiles.styles";
 
+import { FloatButton } from "components/FloatButton";
 import {
   FaChevronDown,
   FaEnvelope,
@@ -71,10 +72,23 @@ interface ProfileData {
 export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [accordionActive, setAccordionActive] = useState<string | null>(null);
+  const [showButton, setShowButton] = useState(false);
 
-  const handleAccordionActive = (section: string) => {
-    setAccordionActive(accordionActive === section ? null : section);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchPerfil = async () => {
@@ -100,6 +114,10 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
       fetchPerfil();
     }
   }, [idProfile]);
+
+  const handleAccordionActive = (section: string) => {
+    setAccordionActive(accordionActive === section ? null : section);
+  };
 
   if (!profile) return null;
 
@@ -203,6 +221,7 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
           <CVButton href={`mailto:${profile.contacto}`}>Contactar</CVButton>
         </CVButtons>
       </CVCard>
+      {showButton && <FloatButton />}
     </CVRoot>
   );
 };

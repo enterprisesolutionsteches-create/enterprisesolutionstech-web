@@ -8,6 +8,7 @@ import { db } from "../../../../firebaseConfig";
 import { FACEBOOK, INSTAGRAM, WHATSAPP } from "constants/general";
 import { Informacion } from "models/Informacion";
 import { Menu } from "models/Menu";
+import { useRouter } from "next/router";
 import { FaFacebook, FaInstagram, FaPhone, FaWhatsapp } from "react-icons/fa";
 import {
   Block,
@@ -37,7 +38,7 @@ export const Header: FC<HeaderProps> = () => {
   if (typeof window !== "undefined") {
     urlPage = window.location.href ?? "";
   }
-
+  const router = useRouter();
   const [data, setData] = useState<Informacion[]>([]);
   const [dataMenu, setDataMenu] = useState<Menu[]>([]);
   const [isHovered, setIsHovered] = useState(false);
@@ -45,6 +46,7 @@ export const Header: FC<HeaderProps> = () => {
   const [classActive, setClassActive] = useState("");
   const [active, setActive] = useState(false);
   const [storedPhone, setStoredPhone] = useState("");
+  const hideElement = router.pathname.includes("profiles");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -167,41 +169,45 @@ export const Header: FC<HeaderProps> = () => {
                   />
                 </Link>
               </Logo>
-              <IconMenu onClick={handleClick}>
-                {!active ? <FaBars size={24} /> : <GrClose size={24} />}
-              </IconMenu>
+              {!hideElement && (
+                <IconMenu onClick={handleClick}>
+                  {!active ? <FaBars size={24} /> : <GrClose size={24} />}
+                </IconMenu>
+              )}
             </HeaderBar>
-            <NavContent>
-              <NavPrimary className={classActive}>
-                {dataMenu &&
-                  dataMenu?.map((item, index) => (
-                    <NavPrimaryItem
-                      key={index}
-                      className={url.includes(item.url) ? "selected" : ""}
-                    >
-                      <Link
-                        href={`#${item.url}`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          document.getElementById(item.url)?.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start",
-                          });
-                          setActive(false);
-                        }}
+            {!hideElement && (
+              <NavContent>
+                <NavPrimary className={classActive}>
+                  {dataMenu &&
+                    dataMenu?.map((item, index) => (
+                      <NavPrimaryItem
+                        key={index}
+                        className={url.includes(item.url) ? "selected" : ""}
                       >
-                        {item.menu}
-                        <Selected
-                          className={url.includes(item.url) ? "active" : ""}
+                        <Link
+                          href={`#${item.url}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById(item.url)?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                            setActive(false);
+                          }}
                         >
-                          .
-                        </Selected>
-                        <FaChevronRight size={24} />
-                      </Link>
-                    </NavPrimaryItem>
-                  ))}
-              </NavPrimary>
-            </NavContent>
+                          {item.menu}
+                          <Selected
+                            className={url.includes(item.url) ? "active" : ""}
+                          >
+                            .
+                          </Selected>
+                          <FaChevronRight size={24} />
+                        </Link>
+                      </NavPrimaryItem>
+                    ))}
+                </NavPrimary>
+              </NavContent>
+            )}
           </HeaderContent>
         </Container>
       </BlockHeader>
