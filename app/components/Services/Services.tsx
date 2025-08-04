@@ -35,9 +35,9 @@ export const Services = () => {
         <CarouselContainer>
           <ContentGeneral>
             <GridContainer>
-              {dataServicios.map((item) => {
+              {dataServicios.map((item, i) => {
                 return (
-                  <GridItem>
+                  <GridItem key={`services-${i}`}>
                     <Title>
                       <Image src={item.image} alt={item.title} />
                       <Title>{item.title}</Title>
