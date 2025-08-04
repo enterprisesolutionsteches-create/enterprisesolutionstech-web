@@ -1,5 +1,6 @@
 import parse from "html-react-parser";
 import { ComponentProps, FC, useState } from "react";
+import { IoClose } from "react-icons/io5";
 import { InformationLegal } from "../../models/Home";
 import {
   Body,
@@ -8,11 +9,8 @@ import {
   Description,
   Header,
   HeaderClose,
-  Section,
-  SeeMoreText,
-  Title,
+  Section
 } from "./ModalInformationLegal.styles";
-import { IoClose } from "react-icons/io5";
 
 type ModalCalculateCP = ComponentProps<typeof Section>;
 type ModalCalculateProps = ModalCalculateCP & {
@@ -44,16 +42,10 @@ export const ModalInformationLegal: FC<ModalCalculateProps> = ({
               </HeaderClose>
             </Header>
             <Body>
-              {/* <Title>{data?.nombre}</Title> */}
               {data?.contenido && (
-                <Description showMore={showMore}>
+                <Description>
                   {parse(data?.contenido.split("\n").join(""))}
                 </Description>
-              )}
-              {!showMore && data?.contenido && data?.contenido.length > 500 && (
-                <SeeMoreText onClick={() => setShowMore(true)}>
-                  ver más
-                </SeeMoreText>
               )}
             </Body>
           </Box>

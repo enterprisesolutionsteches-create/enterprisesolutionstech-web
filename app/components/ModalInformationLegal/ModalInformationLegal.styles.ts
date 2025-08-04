@@ -9,19 +9,13 @@ export const Section = styled("div", {
   inset: 0,
   zIndex: 99,
   background: "$modalBg",
+  padding: "20px",
 });
 
 export const Container = styled(ElementContainer, {
   alignItems: "center",
   display: "flex",
-  px: "11rem",
   justifyContent: "center",
-  "@bp5": {
-    px: "15rem",
-  },
-  "@bp4": {
-    px: "1rem",
-  },
 });
 
 export const Box = styled("div", {
@@ -29,12 +23,8 @@ export const Box = styled("div", {
   borderRadius: "8px",
   px: "24px",
   py: "8px",
-  maxHeight: "502px",
-  minWidth: "691px",
-  "@bp1": {
-    minWidth: "301px",
-    minHeight: "521px",
-  },
+  height: "100%",
+  width: "100%",
 });
 
 export const Header = styled("div", {
@@ -59,8 +49,8 @@ export const Body = styled("div", {
   flexDirection: "column",
   justifyContent: "flex-start",
   py: "0.5rem",
-  maxWidth: "643px",
-  minHeight: "521px",
+  width: "100%",
+  height: "100%",
   "@bp1": {
     minHeight: "502px",
   },
@@ -80,36 +70,29 @@ export const Description = styled("div", {
   textAlign: "start",
   justifyContent: "initial",
   overflow: "hidden",
-  height: "390px",
-  width: "643px",
+  maxHeight: "650px",
   textOverflow: "ellipsis",
+  paddingRight: 15,
   "@bp1": {
-    width: "269px",
+    maxHeight: "480px",
+
   },
   a: {
     display: "inline-block",
   },
-  variants: {
-    showMore: {
-      true: {
-        height: "422px",
-        overflowY: "scroll",
-        "&::-webkit-scrollbar": {
-          width: "8px",
-          minHeight: "422px",
-          // Ancho de la barra de desplazamiento
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "$undefined06", // Color del pulgar de la barra de desplazamiento
-          borderRadius: "10px", // Bordes redondeados del pulgar
-          border: "3px solid $gray100", // Bordes del pulgar
-        },
-        "&::-webkit-scrollbar-track": {
-          backgroundColor: "#F5F5F5", // Color de la pista de la barra de desplazamiento
-          borderRadius: "10px", // Bordes redondeados de la pista
-        },
-      },
-    },
+  overflowY: "scroll",
+  "&::-webkit-scrollbar": {
+    width: "8px",
+    minHeight: "422px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "$undefined06",
+    borderRadius: "10px",
+    border: "3px solid $gray100",
+  },
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: "#F5F5F5",
+    borderRadius: "10px",
   },
 });
 

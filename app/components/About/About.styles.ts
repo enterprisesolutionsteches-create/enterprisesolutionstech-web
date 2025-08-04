@@ -77,8 +77,8 @@ export const SubTitle = styled("strong", {
   lineHeight: "$125",
   margin: 0,
   paddingBottom: "$5",
-  marginBottom: "10px", 
-  fontWeight: "600"
+  marginBottom: "10px",
+  fontWeight: "600",
 });
 
 export const Slogan = styled("h3", {
@@ -663,8 +663,12 @@ export const GridPrograma = styled("div", {
   gap: "$5",
   gridTemplateColumns: "repeat(5, 1fr)",
   width: "100%",
+  "@bp3": {
+    gridTemplateColumns: "repeat(4, 1fr)",
+    margin: "10px 20px",
+  },
   "@media (max-width: 1024px)": {
-    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateColumns: "repeat(3, 1fr)",
     margin: "10px 20px",
   },
   "@media (max-width: 768px)": {

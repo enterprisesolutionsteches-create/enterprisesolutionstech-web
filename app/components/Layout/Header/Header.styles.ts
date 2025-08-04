@@ -2,12 +2,12 @@ import { styled } from "../../../stitches.config";
 import { ElementContainer } from "../../Container/Container.styles";
 
 export const Block = styled("header", {
-  display: "grid",
-  gridArea: "header",
+  display: "flex",
+  flexDirection: "column",
   filter: "drop-shadow(0px 4px 16px rgba(71, 69, 95, 0.06))",
   position: "relative",
   zIndex: 2,
-  "@bp2": {
+  "@bp3": {
     inset: 0,
     "& nav": { display: "none" },
     "&.fixed": {
@@ -33,7 +33,6 @@ export const Contact = styled("div", {
   justifyContent: "space-between",
   padding: "0px 24px",
   "& a": {
-    // alignItems: "flex-end",
     display: "flex",
     minWidth: "max-content",
   },
@@ -56,6 +55,7 @@ export const BlockHeader = styled("div", {
   backgroundColor: "$neutral100",
   borderBottom: "1px solid $neutral500",
   overflow: "hidden",
+  height: "100%",
   py: "$9",
   "@bp3": {
     py: 0,
