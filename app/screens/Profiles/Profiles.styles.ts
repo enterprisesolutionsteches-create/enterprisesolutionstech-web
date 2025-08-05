@@ -155,7 +155,7 @@ export const SectionTitleVerMas = styled("h4", {
   fontSize: "12px",
   fontWeight: "bold",
   marginTop: "2px",
-  marginBottom: "4px",
+  marginBottom: "8px",
   cursor: "pointer",
   display: "flex",
   justifyContent: "center",
@@ -222,4 +222,5 @@ export const PortfolioLink = styled("div", {
 
 export const ContainerVerMas = styled("div", {
   display: "grid",
+  width: "100%"
 });
