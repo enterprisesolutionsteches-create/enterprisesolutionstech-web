@@ -70,7 +70,7 @@ export const DateText = styled("h3", {
 });
 
 export const CVDescription = styled("p", {
-  fontSize: "0.9rem",
+  fontSize: "14px",
   color: "#666",
   marginBottom: "15px",
 });
@@ -129,7 +129,7 @@ export const CVButton = styled("a", {
 export const SectionTitle = styled("h4", {
   fontSize: "1.1rem",
   fontWeight: "bold",
-  marginTop: "20px",
+  marginTop: "10px",
   marginBottom: "10px",
   cursor: "pointer",
   display: "flex",
