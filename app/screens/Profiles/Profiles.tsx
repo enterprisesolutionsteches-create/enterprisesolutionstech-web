@@ -3,6 +3,8 @@ import { FC, useEffect, useState } from "react";
 import { db } from "../../../firebaseConfig";
 import {
   ContactLinks,
+  ContainerExperienceTitle,
+  CVAddress,
   CVButton,
   CVButtons,
   CVCard,
@@ -11,12 +13,16 @@ import {
   CVName,
   CVRole,
   CVRoot,
+  DateText,
   ExpansionPanel,
+  ExperienceDescription,
   ExperienceItem,
   ExperienceLogo,
+  ExperienceTitle,
   FlexWrapper,
   PortfolioLink,
   SectionTitle,
+  SectionTitleVerMas,
   SocialIcon,
   TechItem,
   TechList,
@@ -46,12 +52,20 @@ interface Experience {
   duracion: string;
   descripcion: string;
   logo_empresa: string;
+  link_empresa: string;
 }
 
 interface Portfolio {
   nombre_proyecto: string;
   descripcion_proyecto: string;
   url_proyecto: string;
+}
+
+interface Certificaciones {
+  title: string;
+  duracion: string;
+  descripcion: string;
+  image: string;
 }
 
 interface ProfileData {
@@ -67,12 +81,17 @@ interface ProfileData {
   tecnologias: Technology[];
   experiencia_laboral: Experience[];
   portafolio: Portfolio[];
+  certificaciones: Certificaciones[];
+  direccion: string;
 }
 
 export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [accordionActive, setAccordionActive] = useState<string | null>(null);
+  const [verMas, setVerMas] = useState<boolean>(false);
+
   const [showButton, setShowButton] = useState(false);
+  const SIZE_ICON = 28;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -119,7 +138,61 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
     setAccordionActive(accordionActive === section ? null : section);
   };
 
+  const handleClickVerMas = () => {
+    setVerMas(!verMas);
+  };
+
   if (!profile) return null;
+
+  const getTecnologias = () => {
+    let tecnologiasFirstPart: Technology[] = [];
+    let tecnologiasSecondPart: Technology[] = [];
+
+    if (profile?.tecnologias.length > 3) {
+      tecnologiasFirstPart = profile?.tecnologias?.slice(0, 3);
+      tecnologiasSecondPart = profile?.tecnologias?.slice(3);
+
+      return (
+        <TechList>
+          {tecnologiasFirstPart?.map((tech, index: number) => (
+            <TechItem key={index}>
+              <img src={tech.imagen} alt={tech.nombre} width="20" height="20" />
+              <span>{tech.nombre}</span>
+            </TechItem>
+          ))}
+          <SectionTitleVerMas onClick={() => handleClickVerMas()}>
+            Ver más
+            <FaChevronDown size={14} className={verMas ? "active" : ""} />
+          </SectionTitleVerMas>
+          <ExpansionPanel className={verMas ? "active" : ""}>
+            <TechList>
+              {tecnologiasSecondPart?.map((tech, index) => (
+                <TechItem key={index}>
+                  <img
+                    src={tech.imagen}
+                    alt={tech.nombre}
+                    width="20"
+                    height="20"
+                  />
+                  <span>{tech.nombre}</span>
+                </TechItem>
+              ))}
+            </TechList>
+          </ExpansionPanel>
+        </TechList>
+      );
+    } else
+      return (
+        <TechList>
+          {profile?.tecnologias?.map((tech, index: number) => (
+            <TechItem key={index}>
+              <img src={tech.imagen} alt={tech.nombre} width="20" height="20" />
+              <span>{tech.nombre}</span>
+            </TechItem>
+          ))}{" "}
+        </TechList>
+      );
+  };
 
   return (
     <CVRoot>
@@ -129,37 +202,31 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
         <ContactLinks>
           {profile?.telefono && (
             <SocialIcon href={`tel:${profile.telefono}`}>
-              <FaPhone size={22} />
+              <FaPhone size={SIZE_ICON} />
             </SocialIcon>
           )}
           {profile?.whatsapp && (
             <SocialIcon href={profile.whatsapp} target="_blank">
-              <FaWhatsapp size={22} />
+              <FaWhatsapp size={SIZE_ICON} />
             </SocialIcon>
           )}
           {profile?.linkedin && (
             <SocialIcon href={profile.linkedin} target="_blank">
-              <FaLinkedin size={22} />
+              <FaLinkedin size={SIZE_ICON} />
             </SocialIcon>
           )}
           {profile?.contacto && (
             <SocialIcon href={`mailto:${profile.contacto}`} target="_blank">
-              <FaEnvelope size={22} />
+              <FaEnvelope size={SIZE_ICON} />
             </SocialIcon>
           )}
         </ContactLinks>
+        <CVAddress>{profile?.direccion}</CVAddress>
         <CVRole>{profile?.rol}</CVRole>
         <CVDescription>{profile?.descripcion}</CVDescription>
 
         <SectionTitle>Tecnologías</SectionTitle>
-        <TechList>
-          {profile?.tecnologias?.map((tech, index: number) => (
-            <TechItem key={index}>
-              <img src={tech.imagen} alt={tech.nombre} width="20" height="20" />
-              <span>{tech.nombre}</span>
-            </TechItem>
-          ))}
-        </TechList>
+        {getTecnologias()}
 
         {profile?.experiencia_laboral && (
           <>
@@ -174,12 +241,21 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
               className={accordionActive === "experience" ? "active" : ""}
             >
               {profile?.experiencia_laboral?.map((exp, index) => (
-                <ExperienceItem key={index}>
+                <ExperienceItem
+                  key={index}
+                  href={exp.link_empresa}
+                  target="_blank"
+                >
                   <FlexWrapper>
                     <ExperienceLogo src={exp.logo_empresa} alt={exp.empresa} />
                     <div>
-                      <strong>{exp.puesto}</strong> en {exp.empresa} (
-                      {exp.duracion})<p>{exp.descripcion}</p>
+                      <ExperienceTitle>{exp.puesto}</ExperienceTitle>
+                      <DateText>
+                        {exp.empresa} ({exp.duracion})
+                      </DateText>
+                      <ExperienceDescription>
+                        {exp.descripcion}
+                      </ExperienceDescription>
                     </div>
                   </FlexWrapper>
                 </ExperienceItem>
@@ -206,9 +282,44 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
                   href={project.url_proyecto}
                   target="_blank"
                 >
-                  <strong>{project.nombre_proyecto}</strong>:{" "}
-                  {project.descripcion_proyecto}
+                  <ExperienceTitle>{project.nombre_proyecto}</ExperienceTitle>
+                  <ExperienceDescription>
+                    {project.descripcion_proyecto}
+                  </ExperienceDescription>
                 </PortfolioLink>
+              ))}
+            </ExpansionPanel>
+          </>
+        )}
+
+        {profile?.certificaciones && (
+          <>
+            <SectionTitle onClick={() => handleAccordionActive("certificados")}>
+              Titulos / Certificados
+              <FaChevronDown
+                size={14}
+                className={accordionActive === "certificados" ? "active" : ""}
+              />
+            </SectionTitle>
+            <ExpansionPanel
+              className={accordionActive === "certificados" ? "active" : ""}
+            >
+              {profile?.certificaciones?.map((exp, index) => (
+                <ExperienceItem key={index}>
+                  <FlexWrapper>
+                    <ExperienceLogo src={exp.image} alt={exp.title} />
+                    <div>
+                      <ContainerExperienceTitle>
+                        <ExperienceTitle>{exp.title}</ExperienceTitle>
+                        {""}
+                        <DateText>({exp.duracion})</DateText>
+                      </ContainerExperienceTitle>
+                      <ExperienceDescription>
+                        {exp.descripcion}
+                      </ExperienceDescription>
+                    </div>
+                  </FlexWrapper>
+                </ExperienceItem>
               ))}
             </ExpansionPanel>
           </>
