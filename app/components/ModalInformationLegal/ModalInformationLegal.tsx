@@ -1,5 +1,5 @@
 import parse from "html-react-parser";
-import { ComponentProps, FC, useState } from "react";
+import { ComponentProps, FC } from "react";
 import { IoClose } from "react-icons/io5";
 import { InformationLegal } from "../../models/Home";
 import {
@@ -24,7 +24,6 @@ export const ModalInformationLegal: FC<ModalCalculateProps> = ({
   data,
   handleCloseModal,
 }) => {
-  const [showMore, setShowMore] = useState(false);
   return (
     open && (
       <Section>
@@ -34,11 +33,10 @@ export const ModalInformationLegal: FC<ModalCalculateProps> = ({
               <div style={{ display: "flex" }}></div>
               <HeaderClose
                 onClick={() => {
-                  setShowMore(false);
                   handleCloseModal();
                 }}
               >
-                <IoClose color="#36AD55" size={26} />
+                <IoClose color="#36AD55" size={36} />
               </HeaderClose>
             </Header>
             <Body>

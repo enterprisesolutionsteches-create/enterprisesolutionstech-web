@@ -1,5 +1,4 @@
 import { styled } from "../../stitches.config";
-import { ElementContainer } from "../Container/Container.styles";
 
 export const Section = styled("div", {
   display: "flex",
@@ -10,9 +9,17 @@ export const Section = styled("div", {
   zIndex: 99,
   background: "$modalBg",
   padding: "20px",
+  "@bp1": {
+    padding: "0px",
+  },
 });
 
-export const Container = styled(ElementContainer, {
+export const Container = styled("div", {
+  width: "100%",
+  margin: "0 auto",
+  height: "100%",
+  padding: "0px",
+  maxWidth: "1440px",
   alignItems: "center",
   display: "flex",
   justifyContent: "center",
@@ -25,6 +32,9 @@ export const Box = styled("div", {
   py: "8px",
   height: "100%",
   width: "100%",
+  "@bp1": {
+    borderRadius: "0px",
+  },
 });
 
 export const Header = styled("div", {
@@ -50,7 +60,7 @@ export const Body = styled("div", {
   justifyContent: "flex-start",
   py: "0.5rem",
   width: "100%",
-  height: "100%",
+  height: "calc(100% - 50px)",
   "@bp1": {
     minHeight: "502px",
   },
@@ -70,13 +80,8 @@ export const Description = styled("div", {
   textAlign: "start",
   justifyContent: "initial",
   overflow: "hidden",
-  maxHeight: "650px",
   textOverflow: "ellipsis",
   paddingRight: 15,
-  "@bp1": {
-    maxHeight: "480px",
-
-  },
   a: {
     display: "inline-block",
   },
