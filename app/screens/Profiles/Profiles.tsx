@@ -215,14 +215,14 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
         {profile?.descripcion && (
           <CVDescription>{profile?.descripcion}</CVDescription>
         )}
-        {profile?.experiencia_laboral && (
+        {profile?.tecnologias && (
           <>
             <SectionTitle>Tecnologías</SectionTitle>
             {getTecnologias()}
           </>
         )}
 
-        {profile?.tecnologias && (
+        {profile?.experiencia_laboral && (
           <>
             <SectionTitle onClick={() => handleAccordionActive("experience")}>
               Experiencia Laboral
@@ -324,7 +324,6 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
           <CVButton href={profile?.cv} target="_blank">
             Descargar CV
           </CVButton>
-          <CVButton href={`mailto:${profile.contacto}`}>Contactar</CVButton>
           {profile?.flyerProperties?.showFlyer && (
             <CVButton>
               <PDFDownloadLink
