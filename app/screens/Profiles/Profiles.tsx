@@ -10,6 +10,7 @@ import {
   CVCard,
   CVDescription,
   CVImage,
+  CVLanguage,
   CVName,
   CVRole,
   CVRoot,
@@ -83,6 +84,7 @@ interface ProfileData {
   portafolio: Portfolio[];
   certificaciones: Certificaciones[];
   direccion: string;
+  idiomas: string;
 }
 
 export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
@@ -221,9 +223,12 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
             </SocialIcon>
           )}
         </ContactLinks>
-        <CVAddress>{profile?.direccion}</CVAddress>
-        <CVRole>{profile?.rol}</CVRole>
-        <CVDescription>{profile?.descripcion}</CVDescription>
+        {profile?.direccion && <CVAddress>{profile?.direccion}</CVAddress>}
+        {profile?.rol && <CVRole>{profile?.rol}</CVRole>}
+        {profile?.idiomas && <CVLanguage>{profile?.idiomas}</CVLanguage>}
+        {profile?.descripcion && (
+          <CVDescription>{profile?.descripcion}</CVDescription>
+        )}
 
         <SectionTitle>Tecnologías</SectionTitle>
         {getTecnologias()}

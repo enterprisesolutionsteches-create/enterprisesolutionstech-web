@@ -70,9 +70,16 @@ export const DateText = styled("h3", {
 });
 
 export const CVDescription = styled("p", {
-  fontSize: "14px",
+  fontSize: "16px",
   color: "#666",
   marginBottom: "15px",
+});
+
+export const CVLanguage = styled("p", {
+  fontSize: "14px",
+  color: "#666",
+  marginTop: 0,
+  marginBottom: 0,
 });
 
 export const CVAddress = styled("p", {
