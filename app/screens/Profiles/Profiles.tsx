@@ -1,5 +1,16 @@
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { FloatButton } from "components/FloatButton";
+import { ModalInformation } from "components/ModalInformation";
 import { doc, getDoc } from "firebase/firestore";
+import { ProfileData, Technology } from "models/Profile";
 import { FC, useEffect, useState } from "react";
+import {
+  FaChevronDown,
+  FaEnvelope,
+  FaLinkedin,
+  FaPhone,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { db } from "../../../firebaseConfig";
 import {
   ContactLinks,
@@ -29,67 +40,11 @@ import {
   TechItem,
   TechList,
 } from "./Profiles.styles";
-
-import { FloatButton } from "components/FloatButton";
-import { ModalInformation } from "components/ModalInformation";
-import {
-  FaChevronDown,
-  FaEnvelope,
-  FaLinkedin,
-  FaPhone,
-  FaWhatsapp,
-} from "react-icons/fa";
+import ProfilesPDF from "./ProfilesPDF/ProfilesPDF";
 
 type ModalCalculateProps = {
   idProfile: string;
 };
-
-interface Technology {
-  nombre: string;
-  imagen: string;
-}
-
-interface Experience {
-  empresa: string;
-  puesto: string;
-  duracion: string;
-  descripcion: string;
-  logo_empresa: string;
-  link_empresa: string;
-}
-
-interface Portfolio {
-  nombre_proyecto: string;
-  descripcion_proyecto: string;
-  url_proyecto: string;
-}
-
-interface Certificaciones {
-  title: string;
-  duracion: string;
-  descripcion: string;
-  image: string;
-  link: string;
-}
-
-interface ProfileData {
-  nombre: string;
-  rol: string;
-  descripcion: string;
-  foto: string;
-  cv: string;
-  contacto: string;
-  telefono?: string;
-  whatsapp?: string;
-  linkedin?: string;
-  tecnologias: Technology[];
-  experiencia_laboral: Experience[];
-  portafolio: Portfolio[];
-  certificaciones: Certificaciones[];
-  direccion: string;
-  idiomas: string;
-}
-
 export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [accordionActive, setAccordionActive] = useState<string | null>(null);
@@ -155,6 +110,22 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
   const handleSetImageData = (image: string) => {
     setCurrentImageData(image);
     setModalIsOpen(true);
+  };
+
+  const getBase64Image = async (url: string) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error("Error al convertir la imagen a base64:", error);
+      return null;
+    }
   };
 
   if (!profile) return null;
@@ -244,11 +215,14 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
         {profile?.descripcion && (
           <CVDescription>{profile?.descripcion}</CVDescription>
         )}
-
-        <SectionTitle>Tecnologías</SectionTitle>
-        {getTecnologias()}
-
         {profile?.experiencia_laboral && (
+          <>
+            <SectionTitle>Tecnologías</SectionTitle>
+            {getTecnologias()}
+          </>
+        )}
+
+        {profile?.tecnologias && (
           <>
             <SectionTitle onClick={() => handleAccordionActive("experience")}>
               Experiencia Laboral
@@ -351,6 +325,33 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
             Descargar CV
           </CVButton>
           <CVButton href={`mailto:${profile.contacto}`}>Contactar</CVButton>
+          {profile?.flyerProperties?.showFlyer && (
+            <CVButton>
+              <PDFDownloadLink
+                document={
+                  <ProfilesPDF
+                    profile={profile}
+                    quantity={
+                      profile?.flyerProperties?.quantity
+                        ? profile?.flyerProperties?.quantity
+                        : 1
+                    }
+                    background={profile?.flyerProperties?.background}
+                    textColor={
+                      profile?.flyerProperties?.textColor
+                        ? profile?.flyerProperties?.textColor
+                        : "black"
+                    }
+                  />
+                }
+                fileName="perfiles.pdf"
+              >
+                {({ loading }) =>
+                  loading ? "Generando PDF..." : "Descargar Flyer"
+                }
+              </PDFDownloadLink>
+            </CVButton>
+          )}
         </CVButtons>
       </CVCard>
       {showButton && <FloatButton />}

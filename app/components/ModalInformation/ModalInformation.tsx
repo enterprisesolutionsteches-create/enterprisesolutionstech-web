@@ -18,7 +18,7 @@ type ModalCalculateProps = ModalCalculateCP & {
   open: boolean;
   data?: InformationLegal;
   handleCloseModal: () => void;
-  image?: string;
+  image?: string | null;
 };
 
 export const ModalInformation: FC<ModalCalculateProps> = ({
