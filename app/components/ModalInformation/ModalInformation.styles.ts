@@ -112,3 +112,10 @@ export const SeeMoreText = styled("span", {
   },
   textAlign: "left",
 });
+
+export const Image = styled("img", {
+  width: "100%",
+  display: "flex",
+  height: "100%",
+  justifyContent: "center",
+});

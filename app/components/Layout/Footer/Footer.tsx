@@ -1,4 +1,4 @@
-import { ModalInformationLegal } from "components/ModalInformationLegal";
+import { ModalInformation } from "components/ModalInformation";
 import {
   ENTERPRISE_EMAIL,
   FACEBOOK,
@@ -246,7 +246,7 @@ export const Footer: FC<FooterProps> = () => {
         </Container>
       </Block>
 
-      <ModalInformationLegal
+      <ModalInformation
         open={modalIsOpenPolicy}
         data={dataInformationLegal[0]}
         handleCloseModal={handleCloseModal}

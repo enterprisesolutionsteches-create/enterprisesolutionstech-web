@@ -4,6 +4,7 @@ import { db } from "../../../firebaseConfig";
 import {
   ContactLinks,
   ContainerExperienceTitle,
+  ContainerVerMas,
   CVAddress,
   CVButton,
   CVButtons,
@@ -30,6 +31,7 @@ import {
 } from "./Profiles.styles";
 
 import { FloatButton } from "components/FloatButton";
+import { ModalInformation } from "components/ModalInformation";
 import {
   FaChevronDown,
   FaEnvelope,
@@ -67,6 +69,7 @@ interface Certificaciones {
   duracion: string;
   descripcion: string;
   image: string;
+  link: string;
 }
 
 interface ProfileData {
@@ -91,8 +94,9 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [accordionActive, setAccordionActive] = useState<string | null>(null);
   const [verMas, setVerMas] = useState<boolean>(false);
-
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [showButton, setShowButton] = useState(false);
+  const [currentImageData, setCurrentImageData] = useState<string | null>(null);
   const SIZE_ICON = 28;
 
   useEffect(() => {
@@ -144,6 +148,15 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
     setVerMas(!verMas);
   };
 
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleSetImageData = (image: string) => {
+    setCurrentImageData(image);
+    setModalIsOpen(true);
+  };
+
   if (!profile) return null;
 
   const getTecnologias = () => {
@@ -162,25 +175,27 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
               <span>{tech.nombre}</span>
             </TechItem>
           ))}
-          <SectionTitleVerMas onClick={() => handleClickVerMas()}>
-            Ver más
-            <FaChevronDown size={14} className={verMas ? "active" : ""} />
-          </SectionTitleVerMas>
-          <ExpansionPanel className={verMas ? "active" : ""}>
-            <TechList>
-              {tecnologiasSecondPart?.map((tech, index) => (
-                <TechItem key={index}>
-                  <img
-                    src={tech.imagen}
-                    alt={tech.nombre}
-                    width="20"
-                    height="20"
-                  />
-                  <span>{tech.nombre}</span>
-                </TechItem>
-              ))}
-            </TechList>
-          </ExpansionPanel>
+          <ContainerVerMas>
+            <SectionTitleVerMas onClick={() => handleClickVerMas()}>
+              Ver más
+              <FaChevronDown size={14} className={verMas ? "active" : ""} />
+            </SectionTitleVerMas>
+            <ExpansionPanel className={verMas ? "active" : ""}>
+              <TechList>
+                {tecnologiasSecondPart?.map((tech, index) => (
+                  <TechItem key={index}>
+                    <img
+                      src={tech.imagen}
+                      alt={tech.nombre}
+                      width="20"
+                      height="20"
+                    />
+                    <span>{tech.nombre}</span>
+                  </TechItem>
+                ))}
+              </TechList>
+            </ExpansionPanel>
+          </ContainerVerMas>
         </TechList>
       );
     } else
@@ -284,8 +299,7 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
               {profile?.portafolio?.map((project, index) => (
                 <PortfolioLink
                   key={index}
-                  href={project.url_proyecto}
-                  target="_blank"
+                  onClick={() => handleSetImageData(project.url_proyecto)}
                 >
                   <ExperienceTitle>{project.nombre_proyecto}</ExperienceTitle>
                   <ExperienceDescription>
@@ -309,18 +323,20 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
             <ExpansionPanel
               className={accordionActive === "certificados" ? "active" : ""}
             >
-              {profile?.certificaciones?.map((exp, index) => (
-                <ExperienceItem key={index}>
+              {profile?.certificaciones?.map((cert, index) => (
+                <ExperienceItem
+                  key={index}
+                  onClick={() => handleSetImageData(cert.link)}
+                >
                   <FlexWrapper>
-                    <ExperienceLogo src={exp.image} alt={exp.title} />
+                    <ExperienceLogo src={cert.image} alt={cert.title} />
                     <div>
                       <ContainerExperienceTitle>
-                        <ExperienceTitle>{exp.title}</ExperienceTitle>
-                        {""}
-                        <DateText>({exp.duracion})</DateText>
+                        <ExperienceTitle>{cert.title}</ExperienceTitle>
+                        <DateText>({cert.duracion})</DateText>
                       </ContainerExperienceTitle>
                       <ExperienceDescription>
-                        {exp.descripcion}
+                        {cert.descripcion}
                       </ExperienceDescription>
                     </div>
                   </FlexWrapper>
@@ -338,6 +354,12 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
         </CVButtons>
       </CVCard>
       {showButton && <FloatButton />}
+
+      <ModalInformation
+        open={modalIsOpen}
+        handleCloseModal={handleCloseModal}
+        image={currentImageData}
+      />
     </CVRoot>
   );
 };

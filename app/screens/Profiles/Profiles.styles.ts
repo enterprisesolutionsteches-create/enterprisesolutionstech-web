@@ -76,7 +76,7 @@ export const CVDescription = styled("p", {
 });
 
 export const CVLanguage = styled("p", {
-  fontSize: "14px",
+  fontSize: "15px",
   color: "#666",
   marginTop: 0,
   marginBottom: 0,
@@ -155,7 +155,7 @@ export const SectionTitleVerMas = styled("h4", {
   fontSize: "12px",
   fontWeight: "bold",
   marginTop: "2px",
-  marginBottom: "0px",
+  marginBottom: "4px",
   cursor: "pointer",
   display: "flex",
   justifyContent: "center",
@@ -184,6 +184,9 @@ export const ExperienceItem = styled("a", {
   borderBottom: "1px solid #eee",
   textAlign: "left",
   cursor: "pointer",
+  "&:hover": {
+    background: "#f9f9f9",
+  },
 });
 
 export const ContainerExperienceTitle = styled("a", {
@@ -204,7 +207,8 @@ export const FlexWrapper = styled("div", {
   alignItems: "center",
 });
 
-export const PortfolioLink = styled("a", {
+export const PortfolioLink = styled("div", {
+  cursor: "pointer",
   display: "block",
   padding: "10px",
   textAlign: "left",
@@ -214,4 +218,8 @@ export const PortfolioLink = styled("a", {
   "&:hover": {
     background: "#f9f9f9",
   },
+});
+
+export const ContainerVerMas = styled("div", {
+  display: "grid",
 });

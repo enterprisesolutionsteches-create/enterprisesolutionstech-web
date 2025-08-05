@@ -1,1 +1,0 @@
-export { ModalInformationLegal } from "./ModalInformationLegal";

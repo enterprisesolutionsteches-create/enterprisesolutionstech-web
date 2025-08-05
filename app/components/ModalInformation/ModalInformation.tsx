@@ -9,20 +9,23 @@ import {
   Description,
   Header,
   HeaderClose,
-  Section
-} from "./ModalInformationLegal.styles";
+  Image,
+  Section,
+} from "./ModalInformation.styles";
 
 type ModalCalculateCP = ComponentProps<typeof Section>;
 type ModalCalculateProps = ModalCalculateCP & {
   open: boolean;
   data?: InformationLegal;
   handleCloseModal: () => void;
+  image?: string;
 };
 
-export const ModalInformationLegal: FC<ModalCalculateProps> = ({
+export const ModalInformation: FC<ModalCalculateProps> = ({
   open,
   data,
   handleCloseModal,
+  image,
 }) => {
   return (
     open && (
@@ -40,10 +43,18 @@ export const ModalInformationLegal: FC<ModalCalculateProps> = ({
               </HeaderClose>
             </Header>
             <Body>
-              {data?.contenido && (
-                <Description>
-                  {parse(data?.contenido.split("\n").join(""))}
-                </Description>
+              {image ? (
+                <Image
+                  src={image}
+                  alt="Descripción de la imagen"
+                  style={{ width: "100%" }}
+                />
+              ) : (
+                data?.contenido && (
+                  <Description>
+                    {parse(data?.contenido.split("\n").join(""))}
+                  </Description>
+                )
               )}
             </Body>
           </Box>
