@@ -1,6 +1,7 @@
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { FloatButton } from "components/FloatButton";
 import { ModalInformation } from "components/ModalInformation";
+import { Tooltip } from "components/Tooltip";
 import { doc, getDoc } from "firebase/firestore";
 import { ProfileData, Technology } from "models/Profile";
 import { FC, useEffect, useState } from "react";
@@ -130,54 +131,91 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
 
   if (!profile) return null;
 
+  const getTolltipComponent = (children: any, message: string) => {
+    if (profile?.generalProperties?.onlyImagesInTechnologies) {
+      return <Tooltip text={message}>{children}</Tooltip>;
+    }
+    return children;
+  };
+
   const getTecnologias = () => {
     let tecnologiasFirstPart: Technology[] = [];
     let tecnologiasSecondPart: Technology[] = [];
+    let SLICE_DEFAULT = 3;
+    if (profile?.generalProperties?.onlyImagesInTechnologies) SLICE_DEFAULT = 7;
 
-    if (profile?.tecnologias.length > 3) {
-      tecnologiasFirstPart = profile?.tecnologias?.slice(0, 3);
-      tecnologiasSecondPart = profile?.tecnologias?.slice(3);
+    if (profile?.tecnologias.length > SLICE_DEFAULT) {
+      tecnologiasFirstPart = profile?.tecnologias?.slice(0, SLICE_DEFAULT);
+      tecnologiasSecondPart = profile?.tecnologias?.slice(SLICE_DEFAULT);
 
       return (
         <TechList>
-          {tecnologiasFirstPart?.map((tech, index: number) => (
-            <TechItem key={index}>
-              <img src={tech.imagen} alt={tech.nombre} width="20" height="20" />
-              <span>{tech.nombre}</span>
-            </TechItem>
-          ))}
-          <ContainerVerMas>
-            <SectionTitleVerMas onClick={() => handleClickVerMas()}>
-              Ver más
-              <FaChevronDown size={14} className={verMas ? "active" : ""} />
-            </SectionTitleVerMas>
-            <ExpansionPanel className={verMas ? "active" : ""}>
-              <TechList>
-                {tecnologiasSecondPart?.map((tech, index) => (
-                  <TechItem key={index}>
-                    <img
-                      src={tech.imagen}
-                      alt={tech.nombre}
-                      width="20"
-                      height="20"
-                    />
-                    <span>{tech.nombre}</span>
-                  </TechItem>
-                ))}
-              </TechList>
-            </ExpansionPanel>
-          </ContainerVerMas>
+          {tecnologiasFirstPart?.map((tech, index: number) =>
+            getTolltipComponent(
+              <TechItem key={index}>
+                <img
+                  src={tech.imagen}
+                  alt={tech.nombre}
+                  width="20"
+                  height="20"
+                />
+                {!profile?.generalProperties?.onlyImagesInTechnologies && (
+                  <span>{tech.nombre}</span>
+                )}
+              </TechItem>,
+              tech.nombre
+            )
+          )}
+          {tecnologiasSecondPart?.length > 0 && (
+            <ContainerVerMas>
+              <SectionTitleVerMas onClick={() => handleClickVerMas()}>
+                Ver más
+                <FaChevronDown size={14} className={verMas ? "active" : ""} />
+              </SectionTitleVerMas>
+              <ExpansionPanel className={verMas ? "active" : ""}>
+                <TechList>
+                  {tecnologiasSecondPart?.map((tech, index) =>
+                    getTolltipComponent(
+                      <TechItem key={index}>
+                        <img
+                          src={tech.imagen}
+                          alt={tech.nombre}
+                          width="20"
+                          height="20"
+                        />
+                        {!profile?.generalProperties
+                          ?.onlyImagesInTechnologies && (
+                          <span>{tech.nombre}</span>
+                        )}
+                      </TechItem>,
+                      tech.nombre
+                    )
+                  )}
+                </TechList>
+              </ExpansionPanel>
+            </ContainerVerMas>
+          )}
         </TechList>
       );
     } else
       return (
         <TechList>
-          {profile?.tecnologias?.map((tech, index: number) => (
-            <TechItem key={index}>
-              <img src={tech.imagen} alt={tech.nombre} width="20" height="20" />
-              <span>{tech.nombre}</span>
-            </TechItem>
-          ))}{" "}
+          {profile?.tecnologias?.map((tech, index: number) =>
+            getTolltipComponent(
+              <TechItem key={index}>
+                <img
+                  src={tech.imagen}
+                  alt={tech.nombre}
+                  width="20"
+                  height="20"
+                />
+                {!profile?.generalProperties?.onlyImagesInTechnologies && (
+                  <span>{tech.nombre}</span>
+                )}
+              </TechItem>,
+              tech.nombre
+            )
+          )}
         </TechList>
       );
   };
@@ -243,9 +281,9 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
                   <FlexWrapper>
                     <ExperienceLogo src={exp.logo_empresa} alt={exp.empresa} />
                     <div>
-                      <ExperienceTitle>{exp.puesto}</ExperienceTitle>
+                      <ExperienceTitle>{exp.puesto} - ({exp.duracion})</ExperienceTitle>
                       <DateText>
-                        {exp.empresa} ({exp.duracion})
+                        {exp.empresa}
                       </DateText>
                       <ExperienceDescription>
                         {exp.descripcion}

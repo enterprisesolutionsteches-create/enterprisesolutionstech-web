@@ -109,10 +109,13 @@ export const Title = styled("span", {
   display: "grid",
   color: "$neutral900",
   fontFamily: "$AgrandirRegular",
-  fontSize: "32px",
+  fontSize: "25px",
   fontWeight: 600,
   marginBottom: 10,
-  marginTop: 20
+  marginTop: 20,
+  "@bp1": {
+    fontSize: "32px",
+  },
 });
 export const Description = styled("span", {
   display: "grid",

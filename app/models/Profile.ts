@@ -34,6 +34,10 @@ export interface FlyerProperties {
   textColor: string
 }
 
+export interface GeneralProperties {
+  onlyImagesInTechnologies: boolean;
+}
+
 export interface ProfileData {
   nombre: string;
   rol: string;
@@ -51,5 +55,6 @@ export interface ProfileData {
   direccion: string;
   idiomas: string;
   fotoBase64: string;
-  flyerProperties: FlyerProperties
+  flyerProperties: FlyerProperties;
+  generalProperties: GeneralProperties;
 }

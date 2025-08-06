@@ -97,6 +97,7 @@ export const Description = styled("p", {
   gridArea: "description",
   lineHeight: "$24",
   margin: 0,
+  marginBottom: 30
 });
 
 export const GridWeHave = styled("div", {

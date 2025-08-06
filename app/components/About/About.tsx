@@ -40,8 +40,8 @@ export const About = () => {
   }, []);
 
   const goToProfile = (idProfile: string) => {
-    router.replace(`${routes.profile}/${idProfile}`);
-  }
+    if (idProfile) router.replace(`${routes.profile}/${idProfile}`);
+  };
 
   return (
     <AboutRoot>
@@ -73,7 +73,10 @@ export const About = () => {
           <GridPrograma style={{ position: "relative", top: "20px" }}>
             {dataNosotros.map((item) => {
               return (
-                <BoxPrograma key={item.nombre} onClick={()=>goToProfile(item.idProfile)}>
+                <BoxPrograma
+                  key={item.nombre}
+                  onClick={() => goToProfile(item.idProfile)}
+                >
                   <BodyPrograma>
                     <TitlePrograma>{item.nombre}</TitlePrograma>
                     <TitlePrograma style={{ fontSize: "16px" }}>
@@ -109,7 +112,6 @@ export const About = () => {
               colaborativo y sostenible, donde cada nodo se convierta en un
               punto clave para el progreso y la transformación.
             </Description>
-            <br></br>
             <Slogan>Crea, Conecta e Innova</Slogan>
           </GridCompanies>
         </Container>
