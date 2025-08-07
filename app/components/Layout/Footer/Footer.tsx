@@ -116,7 +116,7 @@ export const Footer: FC<FooterProps> = () => {
               </Logo>
               <Column2>
                 <Nav>
-                  <Content style={{ marginTop: "38px" }}>
+                  <Content>
                     <Title onClick={(e) => handleAccordionActive("services")}>
                       Servicios
                       <BsChevronDown size={10} />
@@ -136,7 +136,7 @@ export const Footer: FC<FooterProps> = () => {
                   </Content>
                 </Nav>
               </Column2>
-              <Column3 style={{ marginTop: "35px" }}>
+              <Column3>
                 <Title onClick={(e) => handleAccordionActive("contact")}>
                   Contáctanos
                   <BsChevronDown size={10} />
@@ -156,7 +156,7 @@ export const Footer: FC<FooterProps> = () => {
                 </NavList>
               </Column3>
               <Column4>
-                <Content style={{ marginTop: "38px" }}>
+                <Content>
                   <Title onClick={(e) => handleAccordionActive("redes")}>
                     Nuestras Redes
                     <BsChevronDown size={10} />

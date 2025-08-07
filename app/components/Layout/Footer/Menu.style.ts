@@ -3,7 +3,6 @@ import { styled } from "../../../stitches.config";
 export const Nav = styled("div", {});
 export const Content = styled("div", {
   paddingBottom: "$7",
-  marginLeft: "$13",
   "&.apps": { padding: 0 },
   "@bp1": {
     borderBottom: "1px solid $primary600",
@@ -43,11 +42,11 @@ export const Title = styled("h5", {
 export const NavList = styled("ul", {
   margin: 0,
   padding: 0,
+  paddingBottom: "$7",
   "@bp1": {
     display: "none",
     "&.active": {
       display: "block",
-      paddingBottom: "$7",
       "& ul": {
         display: "block",
       },

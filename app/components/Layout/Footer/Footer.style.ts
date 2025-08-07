@@ -34,20 +34,20 @@ export const Grid = styled("div", {
 });
 
 export const FooterTop = styled("div", {
-  columnGap: "$9",
+  columnGap: "100px",
   display: "grid",
   gridTemplateAreas: `
-    'logo col2 col3 col4 col5'
+    'logo col2 col3 col4'
   `,
-  gridTemplateColumns: "repeat(3,1fr)",
+  gridTemplateColumns: "repeat(4,1fr)",
   py: "48px",
   "@bp5": {
-    gridTemplateColumns: "repeat(3,1fr)",
+    gridTemplateColumns: "repeat(4,1fr)",
   },
   "@bp4": {
     gridTemplateAreas: `
-      'logo col2 col3'
-      'logo col4 col5'
+      'logo col2 col3 '
+      'col4 . .'
     `,
     gridTemplateColumns: "repeat(3,1fr)",
   },
@@ -82,6 +82,7 @@ export const Column3 = styled("div", {
   display: "flex",
   gridArea: "col3",
   flexDirection: "column",
+  marginBottom: "$3",
 });
 export const Column4 = styled("div", { gridArea: "col4" });
 export const Column5 = styled("div", { gridArea: "col5" });
@@ -239,8 +240,9 @@ export const ContactInfo = styled("p", {
   color: "#fff",
   fontSize: "0.85rem",
   lineHeight: "1.4",
-  marginTop: "10px",
+  marginTop: "0px",
   textAlign: "left",
+  padding: 0
 });
 
 export const LinkLogo = styled("a", {
