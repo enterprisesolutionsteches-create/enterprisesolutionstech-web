@@ -43,6 +43,7 @@ import {
 } from "./Profiles.styles";
 import ProfilesPDF from "./ProfilesPDF/ProfilesPDF";
 
+const SIZE_TECHNOLOGY_IMAGE = "20";
 type ModalCalculateProps = {
   idProfile: string;
 };
@@ -113,22 +114,6 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
     setModalIsOpen(true);
   };
 
-  const getBase64Image = async (url: string) => {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-      });
-    } catch (error) {
-      console.error("Error al convertir la imagen a base64:", error);
-      return null;
-    }
-  };
-
   if (!profile) return null;
 
   const getTolltipComponent = (children: any, message: string) => {
@@ -156,8 +141,8 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
                 <img
                   src={tech.imagen}
                   alt={tech.nombre}
-                  width="20"
-                  height="20"
+                  width={SIZE_TECHNOLOGY_IMAGE}
+                  height={SIZE_TECHNOLOGY_IMAGE}
                 />
                 {!profile?.generalProperties?.onlyImagesInTechnologies && (
                   <span>{tech.nombre}</span>
@@ -180,8 +165,8 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
                         <img
                           src={tech.imagen}
                           alt={tech.nombre}
-                          width="20"
-                          height="20"
+                          width={SIZE_TECHNOLOGY_IMAGE}
+                          height={SIZE_TECHNOLOGY_IMAGE}
                         />
                         {!profile?.generalProperties
                           ?.onlyImagesInTechnologies && (
@@ -206,8 +191,8 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
                 <img
                   src={tech.imagen}
                   alt={tech.nombre}
-                  width="20"
-                  height="20"
+                  width={SIZE_TECHNOLOGY_IMAGE}
+                  height={SIZE_TECHNOLOGY_IMAGE}
                 />
                 {!profile?.generalProperties?.onlyImagesInTechnologies && (
                   <span>{tech.nombre}</span>
@@ -384,7 +369,7 @@ export const Profiles: FC<ModalCalculateProps> = ({ idProfile }) => {
                 fileName="perfiles.pdf"
               >
                 {({ loading }) =>
-                  loading ? "Generando PDF..." : "Descargar Flyer"
+                  loading ? "Generando PDF..." : "Tarjeta Visita"
                 }
               </PDFDownloadLink>
             </CVButton>

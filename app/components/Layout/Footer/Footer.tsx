@@ -28,6 +28,7 @@ import {
   FooterBottomRow,
   FooterTop,
   Grid,
+  GridPoliticas,
   Image,
   LinkLogo,
   Logo,
@@ -190,29 +191,31 @@ export const Footer: FC<FooterProps> = () => {
                   alignItems="center"
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gridTemplateColumns: "repeat(2, 1fr)",
                     width: "100%",
                   }}
                 >
-                  <AdditionalOption isMobile={isMobileApp}>
+                  <GridPoliticas>
+                    <AdditionalOption
+                      isMobile={isMobileApp}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleOpenModal()}
+                    >
+                      Políticas de Privacidad
+                    </AdditionalOption>
+                    <AdditionalOption isMobile={isMobileApp}>
+                      <Link href="#sobre-enterprisesolutionstech">
+                        {" "}
+                        Sobre Enterprise Solutions Tech
+                      </Link>
+                    </AdditionalOption>
+                  </GridPoliticas>
+                  <AdditionalOption
+                    isMobile={isMobileApp}
+                    style={{ textAlign: "end" }}
+                  >
                     &copy; Enterprise Solutions Tech {new Date().getFullYear()}{" "}
                     Todos los Derechos Reservados
-                  </AdditionalOption>
-                  <AdditionalOption
-                    isMobile={isMobileApp}
-                    style={{ marginLeft: "65px", cursor: "pointer" }}
-                    onClick={() => handleOpenModal()}
-                  >
-                    Políticas de Privacidad
-                  </AdditionalOption>
-                  <AdditionalOption
-                    isMobile={isMobileApp}
-                    style={{ marginLeft: "25px" }}
-                  >
-                    <Link href="#sobre-enterprisesolutionstech">
-                      {" "}
-                      Sobre Enterprise Solutions Tech
-                    </Link>
                   </AdditionalOption>
                 </FooterBottomRow>
               ) : (

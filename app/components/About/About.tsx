@@ -33,6 +33,7 @@ export const About = () => {
         rol: doc.data().rol,
         avatar: doc.data().avatar,
         idProfile: doc.data().idProfile,
+        isActive: doc.data().isActive,
       }));
       setDataNosotros(data);
     };
@@ -70,27 +71,31 @@ export const About = () => {
       <Section>
         <Container>
           <SubTitle>Conoce Nuestro Equipo</SubTitle>
-          <GridPrograma style={{ position: "relative", top: "20px" }}>
+          <GridPrograma
+            itemPerRow={dataNosotros?.length == 1 ? dataNosotros?.length : 0}
+          >
             {dataNosotros.map((item) => {
-              return (
-                <BoxPrograma
-                  key={item.nombre}
-                  onClick={() => goToProfile(item.idProfile)}
-                >
-                  <BodyPrograma>
-                    <TitlePrograma>{item.nombre}</TitlePrograma>
-                    <TitlePrograma style={{ fontSize: "16px" }}>
-                      {item.rol}
-                    </TitlePrograma>
+              if (item.isActive)
+                return (
+                  <BoxPrograma
+                    key={item.nombre}
+                    onClick={() => goToProfile(item.idProfile)}
+                  >
+                    <BodyPrograma>
+                      <TitlePrograma>{item.nombre}</TitlePrograma>
+                      <TitlePrograma style={{ fontSize: "16px" }}>
+                        {item.rol}
+                      </TitlePrograma>
 
-                    <Image
-                      src={item.avatar}
-                      width={"200px"}
-                      alt={item.nombre}
-                    />
-                  </BodyPrograma>
-                </BoxPrograma>
-              );
+                      <Image
+                        src={item.avatar}
+                        width={"200px"}
+                        alt={item.nombre}
+                      />
+                    </BodyPrograma>
+                  </BoxPrograma>
+                );
+              else return null;
             })}
           </GridPrograma>
         </Container>

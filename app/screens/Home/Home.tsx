@@ -27,19 +27,15 @@ export const Home = () => {
 
   const [bannerData, setBannerData] = useState<{ data: DocumentData }[]>([]);
 
-  const { ref: refServices, inView: inViewServices } = useInView({
+  const { ref: refServices } = useInView({
     threshold: 0.5,
     triggerOnce: true,
   });
-  const { ref: refPortfolio, inView: inViewPortfolio } = useInView({
+  const { ref: refNosotros } = useInView({
     threshold: 0.5,
     triggerOnce: true,
   });
-  const { ref: refNosotros, inView: inViewNosotros } = useInView({
-    threshold: 0.5,
-    triggerOnce: true,
-  });
-  const { ref: refContactos, inView: inViewContactos } = useInView({
+  const { ref: refContactos } = useInView({
     threshold: 0.5,
     triggerOnce: true,
   });
@@ -84,16 +80,11 @@ export const Home = () => {
     [bannerData]
   );
   const { BannerData } = useBannerData(memoizedBannerData, "Home", true);
-  
+
   return (
     <HomeRoot>
       {BannerData.length > 0 && (
-        <Banner
-          size={1}
-          isCarousel
-          data={BannerData[0]}
-          className="home"
-        />
+        <Banner size={1} isCarousel data={BannerData[0]} className="home" />
       )}
       <SectionBanner>
         <Container className="nav">

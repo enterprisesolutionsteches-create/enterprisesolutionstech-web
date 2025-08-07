@@ -163,6 +163,11 @@ export const FBTitle = styled("a", {
   lineHeight: "19.6px",
 });
 
+export const GridPoliticas = styled("span", {
+  display: "flex",
+  gap: 20,
+});
+
 export const AdditionalOption = styled("span", {
   "@bp1": {
     fontSize: "$12",
@@ -195,7 +200,7 @@ export const AdditionalOption = styled("span", {
   lineHeight: "19.6px",
 });
 export const Image = styled("img", {
-  maxWidth: "350px"
+  maxWidth: "350px",
 });
 
 export const WrapperApp = styled("span", {
@@ -241,5 +246,5 @@ export const ContactInfo = styled("p", {
 export const LinkLogo = styled("a", {
   background: "white",
   borderRadius: "4px",
-  padding: 10
+  padding: 10,
 });

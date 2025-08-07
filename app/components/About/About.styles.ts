@@ -97,7 +97,7 @@ export const Description = styled("p", {
   gridArea: "description",
   lineHeight: "$24",
   margin: 0,
-  marginBottom: 30
+  marginBottom: 30,
 });
 
 export const GridWeHave = styled("div", {
@@ -587,6 +587,7 @@ export const BoxPrograma = styled("div", {
   width: "100%",
   cursor: "pointer",
   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  justifySelf: "center",
   "@bp5": {
     display: "flex",
     flexDirection: "column",
@@ -659,6 +660,8 @@ export const Card = styled("div", {
 });
 
 export const GridPrograma = styled("div", {
+  position: "relative",
+  top: "20px",
   display: "grid",
   paddingBottom: 50,
   gap: "$5",
@@ -679,5 +682,11 @@ export const GridPrograma = styled("div", {
   },
   "@bp1": {
     margin: "10px",
+  },
+  variants: {
+    itemPerRow: {
+      0: { gridTemplateColumns: "repeat(1, 1fr)" },
+      1: { gridTemplateColumns: "repeat(1, 1fr)" },
+    },
   },
 });
